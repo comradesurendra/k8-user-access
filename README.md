@@ -2,6 +2,26 @@
 
 This repository contains the Kubernetes manifests and scripts to set up a shared development environment as shown in the architecture diagram.
 
+## Architecture Diagram
+
+The implementation follows this architecture:
+
+```
+users
+  ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                    development (namespace)                      │
+│                                                                 │
+│  martin → kube-config → jekyll-node-service → jekyll            │
+│     ↓                           ↓               ↓               │ 
+│  developer-rolebinding     (NodePort)         (pod)             │
+│     ↓                                           ↓               │
+│  developer-role                            jekyll-pvc           │
+│                                                 ↓               │
+│                                            jekyll-pv            │
+└─────────────────────────────────────────────────────────────────┘
+```
+
 ## Architecture Overview
 
 The setup includes:
@@ -164,25 +184,5 @@ To remove all resources:
    ```bash
    kubectl auth can-i <verb> <resource> --as=martin -n development
    ```
-
-## Architecture Diagram
-
-The implementation follows this architecture:
-
-```
-users
-  ↓
-┌─────────────────────────────────────────────────────────────────┐
-│                    development (namespace)                      │
-│                                                                 │
-│  martin → kube-config → jekyll-node-service → jekyll            │
-│     ↓                           ↓               ↓               │ 
-│  developer-rolebinding     (NodePort)         (pod)             │
-│     ↓                                           ↓               │
-│  developer-role                            jekyll-pvc           │
-│                                                 ↓               │
-│                                            jekyll-pv            │
-└─────────────────────────────────────────────────────────────────┘
-```
 
 This setup provides a secure, isolated development environment with proper access controls and persistent storage for collaborative development work. 
