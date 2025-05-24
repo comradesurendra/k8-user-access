@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jekyll
+  namespace: development
+  labels:
+    app: jekyll
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jekyll
+  template:
+    metadata:
+      labels:
+        app: jekyll
+    spec:
+      containers:
+      - name: jekyll
+        image: jekyll/jekyll:4.2.0
+        ports:
+        - containerPort: 4000
+          name: http
+        env:
+        - name: JEKYLL_ENV
+          value: "development"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: jekyll-storage
+          mountPath: /srv/jekyll
+        command: ["jekyll", "serve", "--host", "0.0.0.0", "--port", "4000", "--livereload"]
+        workingDir: /srv/jekyll
+      volumes:
+      - name: jekyll-storage
+        persistentVolumeClaim:
+          claimName: jekyll-pvc 
