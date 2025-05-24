@@ -175,13 +175,13 @@ users
 ┌─────────────────────────────────────────────────────────────────┐
 │                    development (namespace)                      │
 │                                                                 │
-│  martin → kube-config → jekyll-node-service → jekyll           │
-│     ↓                           ↓                   ↓           │
-│  developer-rolebinding     (NodePort)         (pod)            │
+│  martin → kube-config → jekyll-node-service → jekyll            │
+│     ↓                           ↓                   ↓           │ 
+│  developer-rolebinding     (NodePort)         (pod)             │
 │     ↓                                           ↓               │
-│  developer-role                            jekyll-pvc          │
+│  developer-role                            jekyll-pvc           │
 │                                                 ↓               │
-│                                            jekyll-pv           │
+│                                            jekyll-pv            │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
